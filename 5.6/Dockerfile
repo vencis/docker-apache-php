@@ -31,7 +31,7 @@ RUN	\
     	# install PECL extensions
     	&& pear config-set php_ini /etc/php/5.6/apache2/php.ini \
 	&& pecl config-set php_ini /etc/php/5.6/apache2/php.ini \
-	&& pecl install apfd json_post \
+	&& pecl install apfd \
     
 	&& phpenmod mcrypt \
 	# Install composer
