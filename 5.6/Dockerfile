@@ -22,12 +22,17 @@ RUN	\
 	&& add-apt-repository -y ppa:ondrej/php \
 	&& add-apt-repository -y ppa:ondrej/apache2 \
 	&& apt-get update \
-    && apt-get install -y curl apache2 libapache2-mod-php5.6 php5.6-cli php5.6-readline php5.6-mbstring php5.6-intl php5.6-zip php5.6-xml php5.6-json php5.6-curl php5.6-mcrypt php5.6-gd php5.6-pgsql php5.6-mysql php-redis php-pear \
+    && apt-get install -y curl apache2 libapache2-mod-php5.6 php5.6-cli php5.6-readline php5.6-mbstring php5.6-intl php5.6-zip php5.6-xml php5.6-json php5.6-curl php5.6-mcrypt php5.6-gd php5.6-pgsql php5.6-mysql php-redis php5.6-geoip php5.6-bcmath php5.6-bz2 php-pecl-http php5.6-imap php5.6-sqlite3 php5.6-pdo php5.6-json php5.6-dev php-pear \
     # Apache settings
     && cp /dev/null ${APACHE_CONF_DIR}/conf-available/other-vhosts-access-log.conf \
     && rm ${APACHE_CONF_DIR}/sites-enabled/000-default.conf ${APACHE_CONF_DIR}/sites-available/000-default.conf \
     && a2enmod rewrite php5.6 \
     # PHP settings
+    	# install PECL extensions
+    	&& pear config-set php_ini /etc/php/5.6/apache2/php.ini \
+	&& pecl config-set php_ini /etc/php/5.6/apache2/php.ini \
+	&& pecl install apfd json_post \
+    
 	&& phpenmod mcrypt \
 	# Install composer
 	&& curl -sS https://getcomposer.org/installer | php -- --version=1.6.4 --install-dir=/usr/local/bin --filename=composer \
